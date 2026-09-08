@@ -13,12 +13,24 @@ export class Triangle implements Figure {
     public b: number,
     public c: number,
   ) {
-    if (a <= 0 || b <= 0 || c <= 0) {
-      throw new Error('some parameter is equal to zero');
+    const sides = { a, b, c };
+
+    for (const [name, value] of Object.entries(sides)) {
+      if (value <= 0) {
+        throw new Error(`Side '${name}' (${value}) is equal or less than zero`);
+      }
     }
 
-    if (a >= b + c || b >= a + c || c >= b + a) {
-      throw new Error('some side is equal or more than a sum of two others');
+    if (a >= b + c) {
+      throw new Error(`Side 'a' (${a}) >= b + c (${b + c})`);
+    }
+
+    if (b >= a + c) {
+      throw new Error(`Side 'b' (${b}) >= a + c (${a + c})`);
+    }
+
+    if (c >= a + b) {
+      throw new Error(`Side 'c' (${c}) >= a + b (${a + b})`);
     }
   }
 
@@ -41,7 +53,7 @@ export class Circle implements Figure {
     public radius: number,
   ) {
     if (radius <= 0) {
-      throw new Error('some parameter is equal to zero');
+      throw new Error(`Radius ${radius} is equal or less than zero`);
     }
   }
 
@@ -58,8 +70,12 @@ export class Rectangle implements Figure {
     public width: number,
     public height: number,
   ) {
-    if (width <= 0 || height <= 0) {
-      throw new Error('some parameter is equal to zero');
+    if (width <= 0) {
+      throw new Error(`Width ${width} is equal or less than zero`);
+    }
+
+    if (height <= 0) {
+      throw new Error(`Height ${height} is equal or less than zero`);
     }
   }
 
